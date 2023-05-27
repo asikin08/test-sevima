@@ -55,10 +55,12 @@ class faktorial {
 
 	@When("Input value faktorial (.*)")
 	def Input_value_faktorial(String value) {
+		WebUI.delay(2);
 		WebUI.verifyTextPresent('Kalkulator Faktorial', true);
 
 		if(value == 'integer') {
 			integer = '1';
+			println integer;
 			WebUI.setText(findTestObject('input_angka_faktorial'), integer);
 		}
 		if(value == 'decimal') {
@@ -75,43 +77,54 @@ class faktorial {
 	def Tap_hitung_faktorial_the_button() {
 		WebUI.click(findTestObject('hitung_faktorial_button'));
 	}
+	@Then("Close Browser")
+	def Close_Browser() {
+		WebUI.closeBrowser();
+	}
 
 	@Then("Validation after input faktorial (.*)")
 	def Validation_after_input_faktorial(String value) {
 
-		String simbol, integer, decimal;
-		String acData = WebUI.getText(findTestObject('validation_alert'));
-
-		if(value == 'success') {
-			WebUI.verifyMatch(acData, 'Faktorial dari 1 adalah: ' + integer, FailureHandling.STOP_ON_FAILURE);
+		if(value == 'Success') {
+			String exData = 'Faktorial dari 1 adalah: ' + integer;
+			println 'Success';
+			String acData = WebUI.getText(findTestObject('validation_alert'));
+			println acData;
+			println exData;
+			WebUI.verifyMatch(acData, exData, true)
+			
 		}else
 		if(value == 'Failed') {
-
+			println 'Failed';
+			String acData = WebUI.getText(findTestObject('validation_alert'));
 			WebUI.verifyMatch(acData, 'Please, enter an number only', FailureHandling.STOP_ON_FAILURE);
 		}else {
-			
+			println 'Failed kosong';
+			integer = 'Failed koson';
 			WebUI.verifyElementNotVisible(findTestObject('validation_alert'));
 		}
+		Close_Browser();
 	}
-	
+
 	@And("Tap terms of services")
 	def Tap_terms_of_services() {
 		WebUI.click(findTestObject('terms_of_services_text'));
 	}
-	
+
 	@And("Validation link terms of services")
 	def Validation_link_terms_of_services() {
 		WebUI.verifyElementNotVisible(findTestObject('terms_of_services_text'));
+		Close_Browser();
 	}
-	
+
 	@And("Tap privacy policy")
 	def Tap_privacy_policy() {
 		WebUI.click(findTestObject('privacy_policy_text'));
 	}
-	
+
 	@And("Validation link policy")
 	def Validation_link_policy() {
 		WebUI.verifyElementNotVisible(findTestObject('privacy_policy_text'));
+		Close_Browser()
 	}
-
 }

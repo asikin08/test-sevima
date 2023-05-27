@@ -1,10 +1,10 @@
 {
-  "keywordFileContentHash": "F9C4EE3D06F26B9188788EEFEA55F0BD",
+  "keywordFileContentHash": "3AF3175D9FAB99EDE919FDD871659B51",
   "keywordClasses": [
     {
       "name": "faktorial",
       "keywordMethods": []
     }
   ],
-  "javadocParsed": false
+  "javadocParsed": true
 }
